@@ -1,59 +1,108 @@
-# CatProjects
+# Cats API
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+A Spring Boot application for managing cat images, integrated with The Cat API.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Upload Cat Images**: Upload and save cat images to the database.
+- **Fetch All Cat Images**: Retrieve a list of all stored cat images.
+- **Delete Cat Images**: Delete a specific cat image by its ID.
+- **Populate Cat Images**: Fetch and store cat images from The Cat API.
 
-```bash
-ng serve
+## Technologies Used
+
+- **Spring Boot**: Backend framework.
+- **MySQL**: Database for storing cat images.
+- **Swagger UI**: API documentation and testing.
+- **Lombok**: Simplified getter, setter, and constructor generation.
+- **The Cat API**: External API for fetching cat images.
+
+## Setup Instructions
+
+### Prerequisites
+
+1. Java 17 or higher installed.
+2. MySQL database running.
+3. Maven installed.
+
+### Configuration
+
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd <repository-folder>
+Update the database settings in application.properties:
+
+ ```
+spring.datasource.url=jdbc:mysql://localhost:3306/cats_api?useSSL=false&serverTimezone=UTC
+spring.datasource.username=<your-username>
+spring.datasource.password=<your-password>
+Add your The Cat API key in application.properties:
+catapi.key=live_a7mSrA7UWjYuK4EsdylxyoUGZsYJQ9hpnYFJJ5IxiEbtSDZY8qRtTcsArYxIj6yj
+Run the application:
+
+mvn spring-boot:run
+Database Initialization
+The application will create and update the cat_images table automatically. Ensure MySQL is running and accessible.
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## API Endpoints
+#### 1. Upload Cat Image
+POST /api/cat-images
+Description: Uploads a cat image.
+Request:
+``` 
+curl --location 'localhost:8080/api/cat-images' \
+--form 'file=@"/path/to/your/image.jpg"'
+```
+Response: Returns the uploaded image details.
 
-## Code scaffolding
+#### 2. Get All Cat Images
+GET /api/cat-images
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+Description: Retrieves all stored cat images.
+Request:
+``` 
+curl --location 'localhost:8080/api/cat-images'
+Response: Returns a list of cat images.
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+#### 3. Delete Cat Image
 
-```bash
-ng generate --help
+DELETE /api/cat-images/{id}
+
+Description: Deletes a specific cat image by ID.
+Request:
+``` 
+curl --location --request DELETE 'http://localhost:8080/api/cat-images/{id}'
+Response: Confirms deletion.
 ```
 
-## Building
+####  4. Populate Cat Images
+POST /api/cat-images/populate
 
-To build the project run:
+Description: Populates the database with cat images from The Cat API.
+Request:
+``` 
+curl --location --request POST 'localhost:8080/api/cat-images/populate'
+Response: Returns the list of fetched images.
 
-```bash
-ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+```
+Project Structure
+src/
+├── main/
+│   ├── java/com/example/catsapi/
+│   │   ├── controller/  # REST controllers
+│   │   ├── entity/      # Entity classes
+│   │   ├── response/    # Response wrapper
+│   │   ├── service/     # Business logic
+│   ├── resources/
+│       ├── application.properties  # Configuration
+│       ├── schema.sql              # Database schema (if needed)
 ```
 
-## Running end-to-end tests
+#### License
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is licensed under the MIT License.

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { FeedComponent } from '../feed/feed.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [FeedComponent],
+  template: `<app-feed></app-feed>`,
 })
 export class AppComponent {
   title = 'cat-projects';
